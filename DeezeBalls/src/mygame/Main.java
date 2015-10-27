@@ -7,20 +7,29 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
+import java.util.ArrayList;
 
 /**
  * test
  * @author normenhansen
  */
 public class Main extends SimpleApplication {
-
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
     }
-
+    
     @Override
     public void simpleInitApp() {
+        
+        // Testing Coordinate class, it's aMaZzZiNg
+        Coordinates coords = new Coordinates("src\\mygame\\socket_2013011114_1513.dat");
+        System.out.println(coords.numberOfTimestamps());
+        System.out.println(coords.numberOfCoordinates());
+        for (int i = 0; i < coords.numberOfTimestamps(); i++) {
+            System.out.println(coords.getCoordinate(i, 0));
+        }
+        
         Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
 
