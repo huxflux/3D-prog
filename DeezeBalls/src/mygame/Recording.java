@@ -14,13 +14,19 @@ import java.util.Scanner;
 
 public class Recording {
     private String filename;
-    private ArrayList<ArrayList<Double>> list = new ArrayList<ArrayList<Double>>();
+    private int numberOfCoordinates;
+    private int numberOfTimestamps;
+    private int numberOfMarkers;
+    private ArrayList<ArrayList<Float>> list = new ArrayList<ArrayList<Float>>();
     private File file;
     private BufferedReader reader = null;
     
     public Recording (String filename) {
         this.filename = filename;
         readFile();
+        numberOfCoordinates = list.get(0).size();
+        numberOfTimestamps = list.size();
+        numberOfMarkers = numberOfCoordinates / 3;
     }
     
     public void readFile() {
@@ -32,9 +38,9 @@ public class Recording {
             
            while ((text = reader.readLine()) != null) {  
             Scanner s = new Scanner(text);
-            list.add(new ArrayList<Double>());
+            list.add(new ArrayList<Float>());
                 while (s.hasNext()) {
-                    list.get(i).add(Double.parseDouble(s.next()));
+                    list.get(i).add(Float.parseFloat(s.next()));
                 }
                 i++;
             }                        
@@ -53,22 +59,45 @@ public class Recording {
         }
     }
     
-    public double getCoordinate(int timestamp, int coordinateIndex) {
-        if ((numberOfTimestamps() < timestamp) || (numberOfCoordinates() < coordinateIndex)) {
-            return -666.0;
+    public float[] getCoordinatesMarker(int marker) {
+        float[] markerCoordinates = new float[numberOfTimestamps*3];
+        if (marker > numberOfMarkers) {
+            markerCoordinates[0] = -666.0f;
+            return markerCoordinates;
+        }
+        int counter = 0;
+        for (int i = 0; i < numberOfTimestamps; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(getCoordinate(i, j+((marker-1)*3)) + ", ");
+                markerCoordinates[counter] = getCoordinate(i, j+((marker-1)*3));
+                counter++;
+            }
+            System.out.println();
+        }
+        return markerCoordinates;
+    }
+    
+    public float getCoordinate(int timestamp, int coordinateIndex) {
+        if ((numberOfTimestamps < timestamp) || (numberOfCoordinates < coordinateIndex)) {
+            return -666.0f;
         }
         return list.get(timestamp).get(coordinateIndex);
     }
     
-    public int numberOfTimestamps() {
-        return list.size();
+    public int getNumberOfMarkers() {
+        return numberOfMarkers;
     }
     
-    public int numberOfCoordinates() {
-        return list.get(0).size();
+    public int getNumberOfCoordinates() {
+        return numberOfCoordinates;
     }
     
+    public int getNumberOfTimestamps() {
+        return numberOfTimestamps;
+    }
+   
     public String toString() {
-        return ("filename: " + filename);
+        return ("filename: " + filename + "\n" + "timestamps: " + numberOfTimestamps +
+                "\n" + "markers: " + numberOfMarkers);
     }
 }
