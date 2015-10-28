@@ -1,11 +1,13 @@
 package mygame;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import java.util.ArrayList;
 
@@ -31,16 +33,16 @@ public class Main extends SimpleApplication {
             System.out.println(recording.getCoordinate(i, 0));
         }
         
-        
-        
-        Box b = new Box(1, 1, 1);
-        Geometry geom = new Geometry("Box", b);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Blue);
-        geom.setMaterial(mat);
+        // Testing my hairy ball
+        Spatial football = assetManager.loadModel("Models/hairyBall/hairyBall.j3o");
+        football.setLocalTranslation(0.0f, 0.0f, 0.0f);
+        football.scale(0.5f, 0.5f, 0.5f);
         //moor di!
-        rootNode.attachChild(geom);
+        DirectionalLight sun = new DirectionalLight();
+        sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f));
+        
+        rootNode.attachChild(football);
+        rootNode.addLight(sun);
     }
 
     @Override
