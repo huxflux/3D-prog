@@ -21,14 +21,17 @@ public class Main extends SimpleApplication {
     
     @Override
     public void simpleInitApp() {
+        String soccerFilename = ("src\\mygame\\soccerball.blend");
         
         // Testing Coordinate class, it's aMaZzZiNg
-        Coordinates coords = new Coordinates("src\\mygame\\socket_2013011114_1513.dat");
-        System.out.println(coords.numberOfTimestamps());
-        System.out.println(coords.numberOfCoordinates());
-        for (int i = 0; i < coords.numberOfTimestamps(); i++) {
-            System.out.println(coords.getCoordinate(i, 0));
+        Recording recording = new Recording("src\\mygame\\socket_2013011114_1513.dat");
+        System.out.println(recording.numberOfTimestamps());
+        System.out.println(recording.numberOfCoordinates());
+        for (int i = 0; i < recording.numberOfTimestamps(); i++) {
+            System.out.println(recording.getCoordinate(i, 0));
         }
+        
+        
         
         Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
