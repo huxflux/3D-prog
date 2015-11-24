@@ -32,6 +32,7 @@ public class Main extends SimpleApplication {
     Spatial football;
     float[] test;
     int counter = 0;
+    float scaleFuck = 7.0f;
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -47,15 +48,12 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         // Testing Coordinate class, it's aMaZzZiNg
-        recording = new Recording("src\\mygame\\socket_2013011113_2810.dat");
+        recording = new Recording("src\\socket_data\\socket_20151112_134007.dat");
         test = recording.getCoordinatesMarker(1);
-        System.out.println(recording.toString());
-        System.out.println(test.length);
        
-        // Testing my hairy ball
         football = assetManager.loadModel("Models/hairyBall/hairyBall.j3o");
         football.setLocalTranslation(0.0f, 0.0f, 0.0f);
-        football.scale(1.0f, 1.0f, 1.0f);
+        football.setLocalScale(scaleFuck, scaleFuck, scaleFuck);
         
         
         cam.setLocation(new Vector3f(200.0f, 300.0f, 600.0f));
@@ -66,21 +64,23 @@ public class Main extends SimpleApplication {
         
         
         //createFootballField();
-        createCorner();
         rootNode.attachChild(football);
         rootNode.addLight(sun);
+        createCorner();
+
         
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        football.setLocalTranslation(test[counter+0], test[counter+1], test[counter+2]);
+        if (test[counter] != 0.0f) {
+            football.setLocalTranslation(test[counter+0], test[counter+1], 0.0f);
+           
+        }
         counter += 3;
         if (counter >= recording.getNumberOfTimestamps()*3) {
             counter = 0;
         }
-        
-        //TODO: add update code
     }
 
     @Override
