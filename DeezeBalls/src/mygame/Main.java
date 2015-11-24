@@ -100,21 +100,6 @@ public class Main extends SimpleApplication {
         rootNode.addLight(sun);
     }
     
-    /*
-    public void createFootballField(){       
-        Box footballField = new Box(105,68,1);//lengden må justeres slik at den passer fotballbanen
-        footballFieldGeo = new Geometry("football_field",footballField);
-        Material footballFieldMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        footballFieldMat.setTexture("DiffuseMap",assetManager.loadTexture("texture/grass.jpg"));
-        footballFieldMat.setTexture("NormalMap", assetManager.loadTexture("texture/grass_normal.jpg"));
-        footballFieldMat.setBoolean("UseMaterialColors", true);
-        footballFieldMat.setColor("Diffuse", ColorRGBA.White);
-        footballFieldMat.setColor("Specular", ColorRGBA.White);
-        footballFieldGeo.setMaterial(footballFieldMat);
-        footballFieldGeo.setLocalTranslation(new Vector3f(105,68,0));
-        rootNode.attachChild(footballFieldGeo);
-    } */
-    
     public void getCornerCoords(int corner){
         coordsX = 0;
         coordsY = 0;
