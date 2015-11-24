@@ -33,6 +33,7 @@ public class Main extends SimpleApplication {
     float[] test;
     int counter = 0;
     float scaleFuck = 7.0f;
+    float transx, transy;
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -62,19 +63,16 @@ public class Main extends SimpleApplication {
         flyCam.setZoomSpeed(50);
         flyCam.setMoveSpeed(200);
         
-        
         //createFootballField();
         rootNode.attachChild(football);
         rootNode.addLight(sun);
         createCorner();
-
-        
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         if (test[counter] != 0.0f) {
-            football.setLocalTranslation(test[counter+0]-220.0f, test[counter+1]-138.0f, 0.0f);  
+            football.setLocalTranslation(test[counter+0], test[counter+1], 0.0f);  
         }
         counter += 3;
         if (counter >= recording2.getNumberOfTimestamps()*3) {
@@ -140,6 +138,9 @@ public class Main extends SimpleApplication {
         getCornerCoords(21);
         Vector3f node8 = new Vector3f(coordsX, coordsY, 0);
         
+        transx = node1.getX();
+        transy = node2.getY()-(node2.getY()-node1.getY())*2;
+        
         //main field
         CreateQuad((node6.getX()-node1.getX())*2, (node2.getY()-node1.getY())*2, "white", 0, 0, 0);
         CreateQuad((node6.getX()-node1.getX())*2 - 10, (node2.getY()-node1.getY())*2 - 10, "green", 5, 5, 0.1f);
@@ -166,13 +167,13 @@ public class Main extends SimpleApplication {
         //mid circle
         circle = new Circle2d(assetManager, (node7.getX()-node6.getX())*2, 2.5f, Color.WHITE, 360, Color.red, 0);
         circle.rotate(FastMath.PI/2, 0, 0);
-        circle.setLocalTranslation(node6.getX()-node1.getX() - (node7.getX()-node6.getX()), node2.getY()-node1.getY() - (node7.getX()-node6.getX()), 0.4f);
+        circle.setLocalTranslation(node6.getX()-node1.getX() - (node7.getX()-node6.getX()) + transx, node2.getY()-node1.getY() - (node7.getX()-node6.getX()) + transy, 0.6f);
         rootNode.attachChild(circle);
         
         //mid dot
         circle = new Circle2d(assetManager, (10)*2, 2.5f, Color.WHITE, 360, Color.WHITE, 360);
         circle.rotate(FastMath.PI/2, 0, 0);
-        circle.setLocalTranslation(node6.getX()-node1.getX() - 10, node2.getY()-node1.getY() - 10, 0.5f);
+        circle.setLocalTranslation(node6.getX()-node1.getX() - 10 + transx, node2.getY()-node1.getY() - 10 + transy, 0.8f);
         rootNode.attachChild(circle);
     }
     
@@ -180,7 +181,7 @@ public class Main extends SimpleApplication {
     public void CreateQuad(float tall1, float tall2, String color, float trans1, float trans2, float trans3) {
         Quad quad = new Quad(tall1, tall2);
         Geometry field = new Geometry("Field", quad);
-        field.setLocalTranslation(new Vector3f(trans1, trans2, trans3));
+        field.setLocalTranslation(new Vector3f(trans1+transx, trans2+transy, trans3));
         defaultUnshaded = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         Texture texture;
         
