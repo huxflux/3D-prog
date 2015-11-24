@@ -28,7 +28,7 @@ public class Main extends SimpleApplication {
     protected float coordsX;
     protected float coordsY;
     protected float coordsZ;
-    Recording recording;
+    Recording recording, recording2;
     Spatial football;
     float[] test;
     int counter = 0;
@@ -48,8 +48,8 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         // Testing Coordinate class, it's aMaZzZiNg
-        recording = new Recording("src\\socket_data\\socket_20151112_134007.dat");
-        test = recording.getCoordinatesMarker(1);
+        recording2 = new Recording("src\\socket_data\\socket_20151112_134007.dat");
+        test = recording2.getCoordinatesMarker(1);
        
         football = assetManager.loadModel("Models/hairyBall/hairyBall.j3o");
         football.setLocalTranslation(0.0f, 0.0f, 0.0f);
@@ -74,11 +74,10 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         if (test[counter] != 0.0f) {
-            football.setLocalTranslation(test[counter+0], test[counter+1], 0.0f);
-           
+            football.setLocalTranslation(test[counter+0]-220.0f, test[counter+1]-138.0f, 0.0f);  
         }
         counter += 3;
-        if (counter >= recording.getNumberOfTimestamps()*3) {
+        if (counter >= recording2.getNumberOfTimestamps()*3) {
             counter = 0;
         }
     }
