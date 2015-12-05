@@ -10,12 +10,10 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
 import java.awt.Color;
-import java.util.ArrayList;
 
 
 
@@ -66,7 +64,16 @@ public class Main extends SimpleApplication {
         //createFootballField();
         rootNode.attachChild(football);
         rootNode.addLight(sun);
-        createCorner();
+        Spatial footballField = assetManager.loadModel("Models/SoccerArena/Soccer Arena.j3o");
+        rootNode.attachChild(footballField);
+        PointLight sun1 = new PointLight();
+        sun1.setPosition(new Vector3f(30.0f, 30.0f, 200.0f));
+        sun1.setRadius(900f);
+        sun1.setColor(ColorRGBA.White);
+        rootNode.addLight(sun1);
+        
+        cam.setLocation(new Vector3f(30.0f, 30.0f, 100.0f));
+        //createCorner();
     }
 
     @Override
